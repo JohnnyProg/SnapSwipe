@@ -65,7 +65,6 @@ export async function getCurrentUser() {
  try {
     const currentAccount = await account.get()
     if(!currentAccount) throw new Error('No user found')
-    console.log("current account = ", currentAccount)   //TODO DELETE THIS LONE
 
     const currentUser = await databases.listDocuments(
         appwriteConfig.databaseId,
@@ -73,7 +72,6 @@ export async function getCurrentUser() {
         [Query.equal('accountId', currentAccount.$id)])
         
     if(!currentUser) throw new Error('No user found')
-    console.log("current user = ", currentUser.documents[0]) //TODO DELETE THIS LONE
     return currentUser.documents[0]
  }catch (error) {
     console.log(error)

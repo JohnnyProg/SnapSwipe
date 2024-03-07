@@ -38,7 +38,7 @@ const SigninForm = () => {
       email: values.email,
       password: values.password
     })
-
+    console.log(session, "session")
     if(!session) {
       return toast({
         title: "Sign in failed. Please try again"
@@ -98,7 +98,7 @@ const SigninForm = () => {
             )}
           />
           <Button type="submit" className="shad-button_primary">
-            {isUserLoading ? (
+            {(isUserLoading || isSigningIn) ? (
               <div className="flex-center gap-2">
                 <Loader /> Loading...
               </div>
