@@ -1,4 +1,4 @@
-import {ID} from 'appwrite'
+import {ID, Query} from 'appwrite'
 import { INewUser } from "@/types";
 import { account, appwriteConfig, avatars, databases } from './config';
 
@@ -21,7 +21,7 @@ export async function createUserAccount(user: INewUser) {
             username: user.username,
             imageUrl: avatarUrl
         })
-        return newAccount
+        return newUser //or newAccount not sure before there was newAccount
     }catch (error) {
         console.error(error);
         return error
@@ -58,4 +58,21 @@ export async function signInAccount(user: {
     } catch (error) {
         console.log(error);
     }
+}
+
+export async function getCurrentUser() {
+ try {
+    const currentAccount = await account.get()
+    if(!currentAccount) throw new Error('No user found')
+    console.log("current account = ", currentAccount)   //TODO DELETE THIS LONE
+    const currentUser = await databases.listDocuments(
+        appwriteConfig.databaseId,
+        appwriteConfig.userCollectionId,
+        [Query.equal('accountId', currentAccount.$id)])
+    if(!currentUser) throw new Error('No user found')
+    console.log("current user = ", currentUser.documents[0]) //TODO DELETE THIS LONE
+    return currentUser.documents[0]
+ }catch (error) {
+    console.log(error)
+ }
 }
