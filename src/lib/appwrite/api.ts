@@ -35,6 +35,7 @@ export async function saveUserToDB(user: {
     imageUrl: URL,
     username?: string
 }) {
+    console.log("user", user)
     try {
         const newUser = await databases.createDocument(
             appwriteConfig.databaseId,
@@ -65,10 +66,12 @@ export async function getCurrentUser() {
     const currentAccount = await account.get()
     if(!currentAccount) throw new Error('No user found')
     console.log("current account = ", currentAccount)   //TODO DELETE THIS LONE
+
     const currentUser = await databases.listDocuments(
         appwriteConfig.databaseId,
         appwriteConfig.userCollectionId,
         [Query.equal('accountId', currentAccount.$id)])
+        
     if(!currentUser) throw new Error('No user found')
     console.log("current user = ", currentUser.documents[0]) //TODO DELETE THIS LONE
     return currentUser.documents[0]
