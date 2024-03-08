@@ -2,11 +2,14 @@ import Loader from '@/components/shared/Loader'
 import PostCard from '@/components/shared/PostCard'
 import { useGetRecentPosts } from '@/lib/react-query/queriesAndMutations'
 import { Models } from 'appwrite'
-import React from 'react'
+import React, { useEffect } from 'react'
 
 const Home = () => {
-  const {data: posts, isPending: isPostLoading, isError: isErrorPosts} = useGetRecentPosts()
+  const {data: posts, isFetching: isPostLoading, isError: isErrorPosts} = useGetRecentPosts()
 
+  useEffect(() => {    
+    console.log(isPostLoading, posts)
+  }, [isPostLoading, posts])
   return (
     <div className='flex flex-1'>
       <div className='home-container'>
@@ -18,7 +21,7 @@ const Home = () => {
           ) : (
             <ul className='flex flex-col flex-1 gap-9 w-full'>
               {posts?.documents.map((post: Models.Document) => (
-                <PostCard key={post.$id} post={post} />
+                <PostCard key={post.$id} post={post} isPostsPending={isPostLoading}/>
               ))}
             </ul>
           )}
@@ -26,6 +29,7 @@ const Home = () => {
       </div>
     </div>
   )
+
 }
 
 export default Home

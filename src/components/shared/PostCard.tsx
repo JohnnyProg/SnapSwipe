@@ -4,13 +4,15 @@ import { Models } from "appwrite";
 import { type } from "os";
 import React from "react";
 import { Link } from "react-router-dom";
+import PostStats from "./PostStats";
 
 type PostCardProps = {
   post: Models.Document;
   key: string;
+  isPostsPending?: boolean;
 };
 
-const PostCard = ({ post, key }: PostCardProps) => {
+const PostCard = ({ post, key, isPostsPending }: PostCardProps) => {
 
   const {user} = useUserContext()
 
@@ -56,6 +58,7 @@ const PostCard = ({ post, key }: PostCardProps) => {
         </div>
         <img src={post.imageUrl || '/assets/icons/profile-placeholder.svg'} alt={post.caption} className="post-card_img" />
       </Link>
+      <PostStats post={post} userId={user.id} isPostsPending={isPostsPending}/>
     </div>
   );
 };
