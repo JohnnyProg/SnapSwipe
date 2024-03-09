@@ -11,7 +11,7 @@ import { Loader } from "lucide-react";
 import { useState, useEffect } from "react";
 
 type PostStatsProps = {
-  post: Models.Document;
+  post?: Models.Document;
   userId: string;
   isPostsPending: boolean;
 };
@@ -25,7 +25,7 @@ function timeFrom(timestamp: number): number {
 }
 
 const PostStats = ({ post, userId, isPostsPending }: PostStatsProps) => {
-  const likesList = post.likes.map((user: Models.Document) => user.$id);
+  const likesList = post?.likes.map((user: Models.Document) => user.$id);
 
   const [likes, setLikes] = useState(likesList);
   const [isSaved, setIsSaved] = useState(false);
@@ -48,7 +48,7 @@ const PostStats = ({ post, userId, isPostsPending }: PostStatsProps) => {
 
   const { data: currentUser } = useGetCurrentUser();
   const savedPostRecord = currentUser?.save.find(
-    (record: Models.Document) => record.post.$id === post.$id
+    (record: Models.Document) => record.post.$id === post?.$id
   );
 
   useEffect(() => {
@@ -64,7 +64,7 @@ const PostStats = ({ post, userId, isPostsPending }: PostStatsProps) => {
       newLikes.push(userId);
     }
     setLikes(newLikes);
-    likePost({ postId: post.$id, likesArray: newLikes });
+    likePost({ postId: post?.$id || '', likesArray: newLikes });
   };
 
   const handleSavePost = (e: React.MouseEvent) => {
@@ -73,7 +73,7 @@ const PostStats = ({ post, userId, isPostsPending }: PostStatsProps) => {
     if (isSaved) {
       deleteSavedPost(savedPostRecord.$id);
     } else {
-      savePost({ postId: post.$id, userId: userId });
+      savePost({ postId: post?.$id || '', userId: userId });
     }
     setIsSaved(!isSaved);
   };
@@ -97,7 +97,7 @@ const PostStats = ({ post, userId, isPostsPending }: PostStatsProps) => {
               onClick={handleLikePost}
               className="cursor-pointer"
             />
-            <p className="small-medium lg:base-medium">{post.likes.length}</p>
+            <p className="small-medium lg:base-medium">{post?.likes.length}</p>
           </>
         )}
       </div>
@@ -120,7 +120,7 @@ const PostStats = ({ post, userId, isPostsPending }: PostStatsProps) => {
               onClick={handleSavePost}
               className="cursor-pointer"
             />
-            <p className="small-medium lg:base-medium">{post.save.length}</p>
+            <p className="small-medium lg:base-medium">{post?.save.length}</p>
           </>
         )}
       </div>
