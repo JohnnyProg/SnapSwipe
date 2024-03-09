@@ -28,7 +28,7 @@ const PostCard = ({ post, key, isPostsPending }: PostCardProps) => {
             <img
               src={
                 post?.creator?.imageUrl ||
-                "/assets/icons/profile-placeholder.svg"
+                `${import.meta.env.BASE_URL}/assets/icons/profile-placeholder.svg`
               }
               className="rounded-full w-12 lg:h-12"
             />
@@ -43,7 +43,7 @@ const PostCard = ({ post, key, isPostsPending }: PostCardProps) => {
           </div>
         </div>
         <Link to={`/update-post/${post.$id}`} className={`${user.id !== post.creator.$id && 'hidden'}`}>
-          <img src="/assets/icons/edit.svg" alt="edit" width={20} height={20} />
+          <img src={`${import.meta.env.BASE_URL}/assets/icons/edit.svg`} alt="edit" width={20} height={20} />
         </Link>
       </div>
       <Link to={`/posts/${post.$id}`}>
@@ -56,7 +56,7 @@ const PostCard = ({ post, key, isPostsPending }: PostCardProps) => {
             }
           </ul>
         </div>
-        <img src={post.imageUrl || '/assets/icons/profile-placeholder.svg'} alt={post.caption} className="post-card_img" />
+        <img src={post.imageUrl || `${import.meta.env.BASE_URL}/assets/icons/profile-placeholder.svg`} alt={post.caption} className="post-card_img" />
       </Link>
       <PostStats post={post} userId={user.id} isPostsPending={isPostsPending}/>
     </div>

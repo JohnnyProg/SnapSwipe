@@ -21,10 +21,10 @@ const TopBar = () => {
             </Link>
             <div className='flex gap-4'>
                 <Button variant='ghost' className="shad-button_ghost" onClick={() => signOut()}>
-                    <img src='/assets/icons/logout.svg' alt='logout' />
+                    <img src={`${import.meta.env.BASE_URL}/assets/icons/logout.svg`} alt='logout' />
                 </Button>
                 <Link to={`/profile/${user.id}`} className='flex-center gap-3'>
-                    <img src={user.imageUrl || '/assets/images/profile-placeholder.svg'} alt='avatar' className='h-8 w-8 rounded-full'/>
+                    <img src={user.imageUrl || `${import.meta.env.BASE_URL}/assets/images/profile-placeholder.svg`} alt='avatar' className='h-8 w-8 rounded-full'/>
                 </Link>
             </div>
         </div>

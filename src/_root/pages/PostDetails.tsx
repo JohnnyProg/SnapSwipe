@@ -32,7 +32,7 @@ const PostDetails = () => {
               <img
                 src={
                   post?.creator?.imageUrl ||
-                  "/assets/icons/profile-placeholder.svg"
+                  `${import.meta.env.BASE_URL}/assets/icons/profile-placeholder.svg`
                 }
                 className="rounded-full w-8 h-8 lg:h-12 lg:w-12"
               />
@@ -57,7 +57,7 @@ const PostDetails = () => {
                 to={`/update-post/${post?.$id}`}
                 className={user?.id === post?.creator.$id ? "" : "hidden"}
               >
-                <img src="/assets/icons/edit.svg" width={24} height={24} />
+                <img src={`${import.meta.env.BASE_URL}/assets/icons/edit.svg`} width={24} height={24} />
               </Link>
               <Button
                 onClick={handleDeletePost}
@@ -67,7 +67,7 @@ const PostDetails = () => {
                 }`}
               >
                 <img
-                  src="/assets/icons/delete.svg"
+                  src={`${import.meta.env.BASE_URL}/assets/icons/delete.svg`}
                   alt="delete"
                   width={24}
                   height={24}

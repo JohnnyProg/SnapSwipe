@@ -92,8 +92,8 @@ const PostStats = ({ post, userId, isPostsPending }: PostStatsProps) => {
             <img
               src={
                 checkIsLiked(likes, userId)
-                  ? "/assets/icons/liked.svg"
-                  : "/assets/icons/like.svg"
+                  ? `${import.meta.env.BASE_URL}/assets/icons/liked.svg`
+                  : `${import.meta.env.BASE_URL}/assets/icons/like.svg`
               }
               alt="like"
               width={20}
@@ -116,7 +116,7 @@ const PostStats = ({ post, userId, isPostsPending }: PostStatsProps) => {
           <>
             <img
               src={
-                isSaved ? "/assets/icons/saved.svg" : "/assets/icons/save.svg"
+                isSaved ? `${import.meta.env.BASE_URL}/assets/icons/saved.svg` : `${import.meta.env.BASE_URL}/assets/icons/save.svg`
               }
               alt="like"
               width={20}
