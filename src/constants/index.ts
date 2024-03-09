@@ -1,50 +1,50 @@
 export const sidebarLinks = [
-    {
-      imgURL: "/assets/icons/home.svg",
-      route: "/",
-      label: "Home",
-    },
-    {
-      imgURL: "/assets/icons/wallpaper.svg",
-      route: "/explore",
-      label: "Explore",
-    },
-    {
-      imgURL: "/assets/icons/people.svg",
-      route: "/all-users",
-      label: "People",
-    },
-    {
-      imgURL: "/assets/icons/bookmark.svg",
-      route: "/saved",
-      label: "Saved",
-    },
-    {
-      imgURL: "/assets/icons/gallery-add.svg",
-      route: "/create-post",
-      label: "Create Post",
-    },
-  ];
-  
-  export const bottombarLinks = [
-    {
-      imgURL: "/assets/icons/home.svg",
-      route: "/",
-      label: "Home",
-    },
-    {
-      imgURL: "/assets/icons/wallpaper.svg",
-      route: "/explore",
-      label: "Explore",
-    },
-    {
-      imgURL: "/assets/icons/bookmark.svg",
-      route: "/saved",
-      label: "Saved",
-    },
-    {
-      imgURL: "/assets/icons/gallery-add.svg",
-      route: "/create-post",
-      label: "Create",
-    },
-  ];
+  {
+    imgURL: `${import.meta.env.BASE_URL}/assets/images/home.svg`,
+    route: "/",
+    label: "Home",
+  },
+  {
+    imgURL: `${import.meta.env.BASE_URL}/assets/images/wallpaper.svg`,
+    route: "/explore",
+    label: "Explore",
+  },
+  {
+    imgURL: `${import.meta.env.BASE_URL}/assets/images/people.svg`,
+    route: "/all-users",
+    label: "People",
+  },
+  {
+    imgURL: `${import.meta.env.BASE_URL}/assets/images/bookmark.svg`,
+    route: "/saved",
+    label: "Saved",
+  },
+  {
+    imgURL: `${import.meta.env.BASE_URL}/assets/images/gallery-add.svg`,
+    route: "/create-post",
+    label: "Create Post",
+  },
+];
+
+export const bottombarLinks = [
+  {
+    imgURL: `${import.meta.env.BASE_URL}/assets/images/home.svg`,
+    route: "/",
+    label: "Home",
+  },
+  {
+    imgURL: `${import.meta.env.BASE_URL}/assets/images/wallpaper.svg`,
+    route: "/explore",
+    label: "Explore",
+  },
+  {
+    imgURL: `${import.meta.env.BASE_URL}/assets/images/bookmark.svg`,
+    route: "/saved",
+    label: "Saved",
+  },
+  {
+    imgURL: `${import.meta.env.BASE_URL}/assets/images/gallery-add.svg`,
+    route: "/create-post",
+    label: "Create",
+  },
+];
