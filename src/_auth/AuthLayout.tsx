@@ -12,7 +12,7 @@ const AuthLayout = () => {
         <section className='flex flex-1 justify-center items-center flex-col py-10'>
           <Outlet />
         </section>
-        <img src="/assets/images/side-img.svg" alt='logl' className='hidden xl:block h-creen w-1/2 object-cover bg-no-repeat' />
+        <img src={`${import.meta.env.BASE_URL}/assets/images/side-img.svg`} alt='logl' className='hidden xl:block h-creen w-1/2 object-cover bg-no-repeat' />
       </>
     )}
     </>  
