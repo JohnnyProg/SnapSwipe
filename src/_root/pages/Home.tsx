@@ -5,11 +5,8 @@ import { Models } from 'appwrite'
 import React, { useEffect } from 'react'
 
 const Home = () => {
-  const {data: posts, isFetching: isPostLoading, isError: isErrorPosts} = useGetRecentPosts()
-
-  useEffect(() => {    
-    console.log(isPostLoading, posts)
-  }, [isPostLoading, posts])
+  const {data: posts, isFetching: isPostLoading} = useGetRecentPosts()
+  console.log("POSTS", posts)
   return (
     <div className='flex flex-1'>
       <div className='home-container'>

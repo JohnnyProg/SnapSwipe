@@ -271,6 +271,7 @@ export async function savePost(postId: string, userId: string) {
       { user: userId, post: postId }
     );
     if (!updatedPost) throw new Error("Post not updated");
+    console.log("updatedPost", updatedPost);
     return updatedPost;
   } catch (error) {
     console.log(error);
