@@ -18,7 +18,7 @@ const App = () => {
         </Route>
 
         {/* private routes */}
-        {/* <Route element={<RootLayout />}>
+        <Route element={<RootLayout />}>
           <Route path='/explore' element={<Explore />} />
           <Route path='/saved' element={<Saved />} />
           <Route path='/all-users' element={<AllUsers />} />
@@ -28,7 +28,7 @@ const App = () => {
           <Route path='/profile/:id/*' element={<Profile />} />
           <Route path='/update-profile/:' element={<UpdateProfile />} />
           <Route index element={<Home />} />
-        </Route> */}
+        </Route>
       </Routes>
       <Toaster />
     </main>
