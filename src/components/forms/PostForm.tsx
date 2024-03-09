@@ -15,21 +15,35 @@ import { Textarea } from "../ui/textarea";
 import FileUploader from "../shared/FileUploader";
 import { PostValidation } from "@/lib/validation";
 import { Models } from "appwrite";
-import { useCreatePost } from "@/lib/react-query/queriesAndMutations";
+import {
+  useCreatePost,
+  useDeletePost,
+  useUpdatePost,
+} from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 import { useToast } from "../ui/use-toast";
 import { useNavigate } from "react-router-dom";
+import Loader from "../shared/Loader";
 
 type PostFormProps = {
+  action: "create" | "update";
   post?: Models.Document;
 };
 
-const PostForm = ({ post }: PostFormProps) => {
+const PostForm = ({ action, post }: PostFormProps) => {
+  console.log("post", post)
   const { mutateAsync: createPost, isPending: isLoadingCreate } =
     useCreatePost();
+
+  const { mutateAsync: updatePost, isPending: isLoadingUpdate } =
+    useUpdatePost();
+
+  const { mutateAsync: deletePost, isPending: isLoadingDelete } =
+    useDeletePost();
+
   const { user } = useUserContext();
-  const { toast } = useToast()
-  const navigate = useNavigate()
+  const { toast } = useToast();
+  const navigate = useNavigate();
 
   const form = useForm<z.infer<typeof PostValidation>>({
     resolver: zodResolver(PostValidation),
@@ -41,8 +55,24 @@ const PostForm = ({ post }: PostFormProps) => {
     },
   });
 
-  // 2. Define a submit handler.
   async function onSubmit(values: z.infer<typeof PostValidation>) {
+    if (action === "update" && post) {
+      const updatedPost = await updatePost({
+        ...values,
+        postId: post?.$id,
+        imageId: post?.imageId,
+        imageUrl: post?.imageUrl,
+      });
+
+      if (!updatedPost) {
+        toast({
+          title: "Please try again",
+        });
+        return;
+      }
+      return navigate(`/posts/${post.$id}`);
+    }
+
     const newPost = await createPost({
       ...values,
       userId: user.id,
@@ -51,10 +81,9 @@ const PostForm = ({ post }: PostFormProps) => {
       toast({
         title: "Please try again",
       });
-      return
+      return;
     }
-    navigate("/")
-
+    navigate("/");
   }
   return (
     <Form {...form}>
@@ -124,16 +153,48 @@ const PostForm = ({ post }: PostFormProps) => {
             </FormItem>
           )}
         />
-        <div className="flex gap-4 items-center justify-end">
-          <Button type="button" className="shad-button_dark_4">
-            Cancel
-          </Button>
-          <Button
-            type="submit"
-            className="shad-button_primary whitespace-nowrap"
-          >
-            Submit
-          </Button>
+        {/* when there is only 1 element then this container have justify-end and when there are more than 1 then its justify between */}
+        <div className={`flex items-center ${action === 'update' ? 'justify-between' : 'justify-end'}`}>
+          {action === "update" && (
+            <Button
+
+              type="button"
+              className="shad-button_delete"
+              onClick={async () => {
+                if (!post) return;
+                await deletePost({postId: post.$id, imageId: post.imageId});
+                navigate("/");
+              }}
+              disabled={isLoadingCreate || isLoadingUpdate || isLoadingDelete}
+            >
+              {isLoadingCreate || isLoadingUpdate || isLoadingDelete ? (
+                <Loader />
+              ) : (
+                "Delete"
+              )}
+            </Button>
+          )}
+
+
+          <div className="flex gap-4 items-center ">
+            <Button type="button" className="shad-button_dark_4 whitespace-nowrap">
+              Cancel
+            </Button>
+
+            <Button
+              type="submit"
+              className="shad-button_primary whitespace-nowrap"
+              disabled={isLoadingCreate || isLoadingUpdate || isLoadingDelete}
+            >
+              {isLoadingCreate || isLoadingUpdate || isLoadingDelete ? (
+                <Loader /> 
+              ) : action === "update" ? (
+                "Update"
+              ) : (
+                "Submit"
+              )}
+            </Button>
+          </div>
         </div>
       </form>
     </Form>

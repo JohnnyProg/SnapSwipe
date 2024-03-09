@@ -254,7 +254,7 @@
   }
 
   .shad-form_message {
-    @apply text-red !important;
+    @apply text-myRed !important;
   }
 
   .shad-input {
@@ -271,10 +271,14 @@
   }
 
   .shad-button_dark_4 {
-    @apply h-12 bg-dark-4 px-5 text-light-1 flex gap-2 !important;
+    @apply bg-dark-4 px-5 text-light-1 flex gap-2 !important;
   }
 
   .shad-button_ghost {
     @apply flex gap-4 items-center justify-start hover:bg-transparent hover:text-white !important;
+  }
+
+  .shad-button_delete {
+    @apply bg-red-500 hover:bg-red-500 text-white !important;
   }
 }
