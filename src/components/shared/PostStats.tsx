@@ -13,7 +13,7 @@ import { useState, useEffect } from "react";
 type PostStatsProps = {
   post?: Models.Document;
   userId: string;
-  isPostsPending: boolean;
+  isPostsPending?: boolean;
 };
 
 function timeFrom(timestamp: number): number {
@@ -29,17 +29,20 @@ const PostStats = ({ post, userId, isPostsPending }: PostStatsProps) => {
 
   const [likes, setLikes] = useState(likesList);
   const [isSaved, setIsSaved] = useState(false);
+  const [saves, setSaves] = useState(post?.save);
 
   const {
     mutate: likePost,
     isPending: isSavingLike,
     submittedAt: submittedLike,
   } = useLikePost();
+
   const {
     mutate: savePost,
     isPending: isSavingPost,
     submittedAt: submittedSave,
   } = useSavePost();
+  
   const {
     mutate: deleteSavedPost,
     isPending: IsDeletingSaved,
@@ -76,6 +79,7 @@ const PostStats = ({ post, userId, isPostsPending }: PostStatsProps) => {
       savePost({ postId: post?.$id || '', userId: userId });
     }
     setIsSaved(!isSaved);
+    setSaves(isSaved ? saves.filter((id : any) => id !== userId) : [...saves, userId]);
   };
 
   return (
@@ -97,7 +101,7 @@ const PostStats = ({ post, userId, isPostsPending }: PostStatsProps) => {
               onClick={handleLikePost}
               className="cursor-pointer"
             />
-            <p className="small-medium lg:base-medium">{post?.likes.length}</p>
+            <p className="small-medium lg:base-medium">{likes.length}</p>
           </>
         )}
       </div>
@@ -120,7 +124,7 @@ const PostStats = ({ post, userId, isPostsPending }: PostStatsProps) => {
               onClick={handleSavePost}
               className="cursor-pointer"
             />
-            <p className="small-medium lg:base-medium">{post?.save.length}</p>
+            <p className="small-medium lg:base-medium">{saves.length}</p>
           </>
         )}
       </div>

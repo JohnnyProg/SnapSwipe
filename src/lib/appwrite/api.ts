@@ -179,18 +179,18 @@ export async function updatePost(post: IUpdatePost) {
 }
 
 export async function deletePost(postId: string, imageId: string) {
-    console.log(postId, imageId)
-    if(!postId || !imageId) throw Error('Post or image not found')
-    try {
-        await databases.deleteDocument(
-            appwriteConfig.databaseId,
-            appwriteConfig.postCollectionId,
-            postId
-        )
-        await deleteFile(imageId)
-    } catch (error) {
-        console.log(error)
-    }
+  console.log(postId, imageId);
+  if (!postId || !imageId) throw Error("Post or image not found");
+  try {
+    await databases.deleteDocument(
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      postId
+    );
+    await deleteFile(imageId);
+  } catch (error) {
+    console.log(error);
+  }
 }
 
 export async function uploadFile(file: File) {
@@ -296,6 +296,42 @@ export async function getPostById(postId: string) {
       appwriteConfig.postCollectionId,
       postId
     );
+    return post;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function getInfinitePosts({
+  pageParam,
+}: {
+  pageParam: number | undefined;
+}) {
+  const queries: any[] = [Query.orderDesc("$updatedAt"), Query.limit(2)];
+
+  if (pageParam) queries.push(Query.cursorAfter(pageParam.toString()));
+
+  try {
+    const post = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      queries
+    );
+    if (!post) throw new Error("No posts found");
+    return post;
+  } catch (error) {
+    console.log(error);
+  }
+}
+
+export async function searchPosts(searchTerm: string) {
+  try {
+    const post = await databases.listDocuments(
+      appwriteConfig.databaseId,
+      appwriteConfig.postCollectionId,
+      [Query.search('caption', searchTerm)]
+    );
+    if (!post) throw new Error("No posts found");
     return post;
   } catch (error) {
     console.log(error);
