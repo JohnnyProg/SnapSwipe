@@ -7,7 +7,7 @@ import {
   useGetPosts,
   useSearchPost,
 } from "@/lib/react-query/queriesAndMutations";
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useInView } from "react-intersection-observer";
 
 const Explore = () => {
@@ -23,8 +23,6 @@ const Explore = () => {
   const {
     data: searchedPosts,
     isFetching: isSearchFetching,
-    isFetched,
-    isRefetching,
   } = useSearchPost(debouncedSearchValue);
 
   useEffect(() => {

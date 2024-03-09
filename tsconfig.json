@@ -23,7 +23,7 @@
     "noFallthroughCasesInSwitch": true,
 
     //Shadcn
-    "BaseUrl": ".",
+    "baseUrl": ".",
     "paths": {
       "@/*": ["src/*"],
     }

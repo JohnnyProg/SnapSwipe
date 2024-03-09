@@ -1,6 +1,6 @@
 import { useUserContext } from '@/context/AuthContext'
 import { useSignOutAccount } from '@/lib/react-query/queriesAndMutations'
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { Button } from '../ui/button'
 
@@ -24,7 +24,7 @@ const TopBar = () => {
                     <img src='/assets/icons/logout.svg' alt='logout' />
                 </Button>
                 <Link to={`/profile/${user.id}`} className='flex-center gap-3'>
-                    <img src={user.imageUrl || '/assets/images/profile-placeholder.svg'} alt='avatar' className='h-8 h-8 rounded-full'/>
+                    <img src={user.imageUrl || '/assets/images/profile-placeholder.svg'} alt='avatar' className='h-8 w-8 rounded-full'/>
                 </Link>
             </div>
         </div>
