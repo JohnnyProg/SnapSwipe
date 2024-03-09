@@ -13,12 +13,14 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import z from "zod/lib";
 import Loader from "@/components/shared/Loader";
-import {Link, useNavigate} from 'react-router-dom'
+import {Link, useLocation, useNavigate} from 'react-router-dom'
 import { useToast } from "@/components/ui/use-toast";
 import { useCreateUserAccount, useSignInAccount } from "@/lib/react-query/queriesAndMutations";
 import { useUserContext } from "@/context/AuthContext";
 
 const SignupForm = () => {
+  let location = useLocation()
+  console.log(location, "location")
   const {toast} = useToast() 
   const {checkAuthUser} = useUserContext()
   const navigate = useNavigate()
