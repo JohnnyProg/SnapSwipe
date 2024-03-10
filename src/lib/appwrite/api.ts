@@ -214,11 +214,13 @@ export async function getFilePreview(fileId: string) {
       //meyby await isnt required
       appwriteConfig.storageId,
       fileId,
-      2000,
-      2000,
-      "top",
+      undefined,
+      undefined,
+      "center",
       100
     );
+    // const fileUrl = await storage.getFileView(appwriteConfig.storageId, fileId)
+    console.log(fileUrl)
     return fileUrl;
   } catch (error) {
     console.log(error);
