@@ -33,7 +33,12 @@ export const useCreatePost = () => {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: (post: INewPost) => createPost(post),
-        onSuccess: () => {
+        onSuccess: (post) => {
+            console.log(post)
+            queryClient.setQueryData([QUERY_KEYS.GET_RECENT_POSTS], (data: any) => {
+                const updatedDocuments = [post, ...data.documents]
+                return {...data, documents: updatedDocuments}
+            })
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
             })
@@ -131,11 +136,31 @@ export const useDeletePost = () => {
     const queryClient = useQueryClient()
     return useMutation({
         mutationFn: ({postId, imageId}: {postId: string, imageId: string}) => deletePost(postId, imageId),
-        onSuccess: () => {
+        onSuccess: (postId) => {
+            queryClient.setQueryData([QUERY_KEYS.GET_RECENT_POSTS], (data: any) => {
+                const updatedDocuments = data.documents.filter((post: any) => post.$id !== postId)
+                return {...data, documents: updatedDocuments}
+            })
             queryClient.invalidateQueries({
                 queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
             })
+            queryClient.invalidateQueries({
+                queryKey: [QUERY_KEYS.GET_INFINITE_POSTS]
+            })
         }
+    })
+}
+onSuccess: (post) => {
+    console.log(post)
+    queryClient.setQueryData([QUERY_KEYS.GET_RECENT_POSTS], (data: any) => {
+        const updatedDocuments = [post, ...data.documents]
+        return {...data, documents: updatedDocuments}
+    })
+    queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
+    })
+    queryClient.invalidateQueries({
+        queryKey: [QUERY_KEYS.GET_INFINITE_POSTS]
     })
 }
 

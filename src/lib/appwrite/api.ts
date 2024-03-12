@@ -97,7 +97,7 @@ export async function createPost(post: INewPost) {
       deleteFile(uploadedFile.$id);
       throw new Error("File not found");
     }
-    console.log("File url", fileUrl);
+
     //convert tags in an array
     const tags = post.tags?.replace(/ /g, "").split(",") || [];
 
@@ -184,12 +184,14 @@ export async function deletePost(postId: string, imageId: string) {
   console.log(postId, imageId);
   if (!postId || !imageId) throw Error("Post or image not found");
   try {
-    await databases.deleteDocument(
+    const response = await databases.deleteDocument(
       appwriteConfig.databaseId,
       appwriteConfig.postCollectionId,
       postId
     );
+    console.log("response of deleting file", response);
     await deleteFile(imageId);
+    return postId
   } catch (error) {
     console.log(error);
   }
