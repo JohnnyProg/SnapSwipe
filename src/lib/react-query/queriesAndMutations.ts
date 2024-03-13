@@ -150,19 +150,6 @@ export const useDeletePost = () => {
         }
     })
 }
-onSuccess: (post) => {
-    console.log(post)
-    queryClient.setQueryData([QUERY_KEYS.GET_RECENT_POSTS], (data: any) => {
-        const updatedDocuments = [post, ...data.documents]
-        return {...data, documents: updatedDocuments}
-    })
-    queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_RECENT_POSTS]
-    })
-    queryClient.invalidateQueries({
-        queryKey: [QUERY_KEYS.GET_INFINITE_POSTS]
-    })
-}
 
 export const useGetPosts = () => {
     return useInfiniteQuery({
