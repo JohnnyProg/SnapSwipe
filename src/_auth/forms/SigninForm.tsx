@@ -27,8 +27,8 @@ const SigninForm = () => {
   const form = useForm<z.infer<typeof SigninValidation>>({
     resolver: zodResolver(SigninValidation),
     defaultValues: {
-      email: "",
-      password: "",
+      email: "jan@gryta.pl",
+      password: "!234Qwer",
     },
   });
 

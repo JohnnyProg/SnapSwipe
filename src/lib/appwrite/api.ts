@@ -314,7 +314,7 @@ export async function getInfinitePosts({
 }: {
   pageParam: number | undefined;
 }) {
-  const queries: any[] = [Query.orderDesc("$updatedAt"), Query.limit(2)];
+  const queries: any[] = [Query.orderDesc("$updatedAt"), Query.limit(6)];
 
   if (pageParam) queries.push(Query.cursorAfter(pageParam.toString()));
 
